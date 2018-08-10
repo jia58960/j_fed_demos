@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>这是主页面</title>
+	<style type="text/css">
+		.main {
+			background-color: #f00;
+			background-image: url("javascript:console.log('WTF?')");
+		}
+		.main::after {
+			content: url('javascript:alert(123);');
+		}
+	</style>
+</head>
+<body>
+	<h1 class="main">这是主页面</h1>
+	<button id="send">发消息给外域iframe页面</button>
+	<iframe  id="iframe" src="http://test.ethan.com:5577/iframe.html" frameborder="0"></iframe>
+	<script>
+		window.onload = function() {
+			// img标签妙用之根据用户网速加载相应资源
+			var s = Date.now()
+			var img = new Image()
+			var images = ['10KB','40KB','80KB','100KB']
+			img.src = './app_i_logo.png' // 1.95KB
+			
+			img.onload = function() {
+				console.log('loaded1')
+				var time = (Date.now() - s) / 1000
+				var speed = (1.95  / time) .toFixed(2)
+				console.log('网络速度：' + speed + 'KB/S')
+				var i = (speed > 0 && speed < 20) ? 0:
+									(speed >= 20 && speed < 50) ?  1 : 
+									(speed >= 50 && speed < 100) ?  2 : 
+									(speed >= 100 && speed < 200) ?  3 : 4
+				console.log('根据用户网速应该加载' + images[i] + '的图片')
+			}
+			if (img.complete) {
+				console.log('complete1')
+			}
+			// img属性crossorigin属性用法
+			var img2 = new Image()
+			var canvas = document.createElement('canvas')
+			var ctx = canvas.getContext('2d')
+			var src = "http://test.ethan.com:5577/cross.png"
+
+			img2.crossOrigin = "Anonymous"
+
+			img2.onload = function() {
+				console.log('loaded2')
+				canvas.width = img2.width
+				canvas.height = img2.height
+				ctx.drawImage(img2, 0, 0)
+				// localStorage.setItem('savedImgData', canvas.toDataURL("image/png"))
+			}
+			if (img2.complete) {
+				console.log('complete2')
+			}
+			img2.src = src;
+			if (img2.complete || img2.complete === undefined) {
+				img2.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP"
+				img2.src = src;
+			}
+			// window.postMessage 应用
+			var btn = document.getElementById('send')
+			var targetOrigin = 'http://test.ethan.com:5577'
+			btn.addEventListener('click', function(event) {
+				document.getElementById('iframe').contentWindow.postMessage('来自主页面的消息！', targetOrigin)
+			}, false)
+
+			window.addEventListener('message', function(e) {
+				if (e.origin !== "http://test.ethan.com:5577") {
+					alert('数据来源域错误')
+					return false
+				}
+				alert('接收到来自frame页面的数据：' + e.data)
+			})
+		}
+	</script>
+</body>
+</html>

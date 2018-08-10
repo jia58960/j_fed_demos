@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>这是iframe内页</title>
+</head>
+<body>
+	<h1>这是iframe内页</h1>
+	<script>
+		window.addEventListener('message', function(e) {
+			if (e.origin !== 'http://test.ethan.com:5566') {
+				alert('来源错误！')
+				return false
+			}
+			alert('接收到数据：' + e.data)
+			window.parent.postMessage('传回给主页面！', '*');
+		})
+	</script>
+</body>
+</html>
