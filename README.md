@@ -8,11 +8,11 @@
 
 ## 使用前提
 
-- 配置一个WEB服务器即可（楼主用的Apache）
+- 配置一个WEB服务器即可（本人用的Apache）
 
 ## 列表
 - [x] demo1：window.postMessage + img标签的另类用法
 - [x] demo2：CSS3实现立方体 + 仿淘宝造物节
 
 ## 发现问题？
-发送邮件(547221469@qq.com)给直接提issue :joy:
+发邮件(547221469@qq.com)给我或直接提issue

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS3实现立方体旋转</title>
+    <style type="text/css">
+    .container {
+        perspective: 1000px;
+        transform-style: preserve-3d;
+    }
+
+    .box {
+        width: 200px;
+        height: 200px;
+        margin: 100px auto;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: 5s;
+        animation-name: myAnimate;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        /* perspective: 1000px; */
+        /* transform: perspective(1000px) rotateX(0deg) rotateY(0deg) */
+    }
+
+    @keyframes myAnimate {
+        from,
+        to {}
+        16% {
+            -webkit-transform: rotateY(90deg);
+        }
+        33% {
+            -webkit-transform: rotateY(-90deg) rotateZ(135deg);
+        }
+        50% {
+            -webkit-transform: rotateY(25deg) rotateZ(135deg);
+        }
+        66% {
+            -webkit-transform: rotateY(135deg) rotateX(135deg);
+        }
+        83% {
+            -webkit-transform: rotateX(135deg);
+        }
+    }
+
+    .box .piece {
+        width: 200px;
+        font-size: 130px;
+        text-align: center;
+        line-height: 200px;
+        height: 200px;
+        border: 1px solid red;
+        background-color: yellow;
+        position: absolute;
+    }
+
+    .piece-1 {
+        transform: rotateY(90deg) translateZ(-100px)/* A -> left */
+    }
+
+    .piece-2 {
+        transform: rotateY(-90deg) translateZ(-100px)/* B -> right*/
+    }
+
+    .piece-3 {
+        transform: rotateX(90deg) translateZ(-100px);
+        /* C -> bottom */
+    }
+
+    .piece-4 {
+        transform: translateZ(-100px);
+        /* D -> back */
+    }
+
+    .piece-5 {
+        transform: rotateX(90deg) translateZ(100px)/* E -> top */
+    }
+
+    .piece-6 {
+        transform: translateZ(100px)/* F -> front */
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="piece piece-1">A</div>
+            <div class="piece piece-2">B</div>
+            <div class="piece piece-3">C</div>
+            <div class="piece piece-4">D</div>
+            <div class="piece piece-5">E</div>
+            <div class="piece piece-6">F</div>
+        </div>
+    </div>
+</body>
+
+</html>
