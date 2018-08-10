@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>仿淘宝造物节</title>
+	<style type="text/css">
+		.container {
+			transform-style: preserve-3d;
+			perspective: 1000px;
+			background: transparent url('./images/bg.jpg') repeat-x;
+		}
+		.box {
+			margin: 0 auto;
+			width: 129px;
+			height: 1170px;
+			position: relative;
+			transform: perspective(1000px) rotateX(20deg) rotateY(20deg)
+		}
+		.piece {
+			width: 129px;
+			height: 1170px;
+			position: absolute;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box" id="inner">
+			
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function() {
+			const imgLen = 9
+			const arr = []
+			for (var i = 1; i <= imgLen; i ++) {
+				arr[i] = '<div class="piece piece-' + i + '"><img src="./images/p' + i + '.png"></div>'
+			}
+			document.getElementById('inner').innerHTML = arr.join('')
+
+			const imgW = 129;
+			const deg = 360 / imgLen / 2
+			const r = imgW / (Math.tan(deg*Math.PI/180)).toFixed(3) // 半径距离 816px
+			const fixedR = r.toFixed(1)
+			document.querySelector('.piece-1').style.WebkitTransform = "rotateY(140deg) translateZ(" + fixedR +")";
+			document.querySelector('.piece-2').style.WebkitTransform = "rotateY(-140deg) translateZ(" + fixedR +")";
+			debugger
+		}
+	</script>
+</body>
+</html>
