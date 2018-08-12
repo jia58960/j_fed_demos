@@ -16,7 +16,7 @@
 				transform: rotateY(0deg)
 			}
 			to {
-				transform: rotateY(342deg)
+				transform: rotateY(360deg)
 			}
 		}
     .box {
@@ -25,10 +25,10 @@
         height: 129px;
         position: relative;
         transform-style: preserve-3d;
-        animation-name: myAnimate;
+        /* animation-name: myAnimate;
         animation-timing-function: ease-in-out;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
+        animation-duration: 20s;
+        animation-iteration-count: infinite; */
         /* width: 8.0625rem; */
         /* transform: perspective(1000px) rotateX(0deg) rotateY(0deg) */
     }
@@ -84,7 +84,6 @@
         const doms = wrapper.querySelectorAll('.piece')
         for (var j = 0; j < doms.length; j++) {
         	doms[j].style.transform = "rotateY(" + 360/imgLen * j + "deg) translateZ(" + r +"px)"; // 
-        	// debugger
         }
 
         // document.querySelector('.piece-1').style.transform = "translateZ(" + r +"px)";
@@ -95,6 +94,30 @@
         // document.querySelector('.piece-6').style.transform = "rotateY(225deg) translateZ(" + r +"px)";
         // document.querySelector('.piece-7').style.transform = "rotateY(270deg) translateZ(" + r +"px)";
         // document.querySelector('.piece-8').style.transform = "rotateY(315deg) translateZ(" + r +"px)";
+        var startPageX = 0
+        wrapper.addEventListener('touchstart', function(e) {
+        	console.log('touch start!')
+        	var eT = e.targetTouches[0]
+        	startPageX = eT.pageX
+        	// e.preventDefault()
+        })
+        wrapper.addEventListener('cick', function(e) {
+        	console.log('click event!')
+        	
+        	// e.preventDefault()
+        })
+
+        wrapper.addEventListener('touchmove', function(e) {
+        	console.log('touch moving!')
+        	const diff = e.targetTouches[0].pageX - startPageX
+        	wrapper.style.transform = "rotateY(" + diff + "deg)"
+        	//e.preventDefault()
+        })
+
+        wrapper.addEventListener('touchend', function(e) {
+        	console.log('touch end!')
+        	//e.preventDefault()
+        })
     }
     </script>
 </body>
