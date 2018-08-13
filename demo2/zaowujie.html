@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <title>仿淘宝造物节</title>
     <style type="text/css">
     .container {
@@ -35,9 +36,8 @@
 
     .piece {
         width: 129px;
-        margin-top: 50px;
+        /* margin-top: 50px; */
         height: 129px;
-        border: 1px solid red;
         text-align: center;
         position: absolute;
     }
@@ -97,21 +97,21 @@
         var startPageX = 0
         wrapper.addEventListener('touchstart', function(e) {
         	console.log('touch start!')
-        	var eT = e.targetTouches[0]
-        	startPageX = eT.pageX
-        	// e.preventDefault()
+        	e.preventDefault()
+            var eT = e.targetTouches[0]
+            startPageX = eT.pageX
         })
-        wrapper.addEventListener('cick', function(e) {
+        wrapper.addEventListener('click', function(e) {
         	console.log('click event!')
         	
         	// e.preventDefault()
         })
 
         wrapper.addEventListener('touchmove', function(e) {
-        	console.log('touch moving!')
-        	const diff = e.targetTouches[0].pageX - startPageX
-        	wrapper.style.transform = "rotateY(" + diff + "deg)"
-        	//e.preventDefault()
+            console.log('touch moving!')
+        	e.preventDefault()
+            const diff = e.targetTouches[0].pageX - startPageX
+            wrapper.style.transform = "rotateY(" + diff + "deg)"
         })
 
         wrapper.addEventListener('touchend', function(e) {
