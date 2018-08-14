@@ -7,13 +7,9 @@
     <title>仿淘宝造物节</title>
     <style type="text/css">
     .container {
-        /* width: 8.0625rem;
-        perspective: 25rem;
-        margin: 0 auto; */
-
         margin: 0 auto 0 auto;
-        width: 8.0625rem;
-        perspective: 25rem;
+        width: 129px;
+        perspective: 400px;
     }
 	/* @keyframes myAnimate {
         from {
@@ -24,9 +20,8 @@
         }
     } */
     .box {
-          -webkit-transform-style: preserve-3d;
-            height: 100%;
-            -webkit-perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
+      height: 100%;
     }
 
     .piece {
@@ -34,8 +29,8 @@
         height: 129px;
         text-align: center;
         position: absolute;
-        width: 8.0625rem;
-        height: 73.125rem;
+        width: 129px;
+        height: 1170px;
     }
     </style>
 </head>
@@ -73,27 +68,27 @@
         	doms[j].style.transform = "rotateY(" + 360/imgLen * j + "deg) translateZ(" + r +"px)"; // 
         }
 
-        var startPageX = 0
+        var startPageX = 0, x = 0, endPageX = 0
         wrapper.addEventListener('touchstart', function(e) {
-        	console.log('touch start!')
         	e.preventDefault()
+        	console.log('touch start!')
             var eT = e.targetTouches[0]
-            startPageX = eT.pageX
-        })
-        wrapper.addEventListener('click', function(e) {
-        	console.log('click event!')
+            startPageX = eT.pageX - x
+            console.log('起始位置' + startPageX)
         })
 
         wrapper.addEventListener('touchmove', function(e) {
-            console.log('touch moving!')
         	e.preventDefault()
-            const diff = e.targetTouches[0].pageX - startPageX
-            wrapper.style.transform = "rotateY(" + diff + "deg)"
+            console.log('touch moving!')
+            endPageX = e.targetTouches[0].pageX
+            console.log('结束位置' + endPageX)
+            x =  endPageX - startPageX
+            console.log(x)
+            wrapper.style.transform = "rotateY(" + x + "deg)"
         })
 
         wrapper.addEventListener('touchend', function(e) {
         	console.log('touch end!')
-        	//e.preventDefault()
         })
     }
     </script>
