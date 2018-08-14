@@ -6,25 +6,34 @@
     <title>仿淘宝造物节</title>
     <style type="text/css">
     .container {
-        transform-style: preserve-3d;
-        perspective: 400px;
-        margin: 0 auto;
-       
+        /* width: 8.0625rem;
+        perspective: 25rem;
+        margin: 0 auto; */
+
+        margin: 0 auto 0 auto;
+        width: 8.0625rem;
+        perspective: 25rem;
     }
-		@keyframes myAnimate {
-			from {
-				transform: rotateY(0deg)
-			}
-			to {
-				transform: rotateY(360deg)
-			}
-		}
+	/* @keyframes myAnimate {
+        from {
+            transform: rotateY(0deg)
+        }
+        to {
+            transform: rotateY(360deg)
+        }
+    } */
     .box {
-        margin: 0 auto;
+          -webkit-transform-style: preserve-3d;
+            height: 100%;
+            -webkit-perspective-origin: 50% 50%;
+
+        /* margin: 0 auto;
         width: 129px;
         height: 129px;
         position: relative;
         transform-style: preserve-3d;
+        perspective-origin: 50% 50%; */
+
         /* animation-name: myAnimate;
         animation-timing-function: ease-in-out;
         animation-duration: 20s;
@@ -34,12 +43,13 @@
     }
 
     .piece {
-        width: 129px;
+        /* width: 129px;
         margin-top: 50px;
-        height: 129px;
-        border: 1px solid red;
-        text-align: center;
         position: absolute;
+         */
+        position: absolute;
+        width: 8.0625rem;
+        height: 73.125rem;
     }
     </style>
 </head>
@@ -65,17 +75,17 @@
         const arrs = r = getRadius(129)
 
         function getRadius(imgW) {
-            const halfW = imgW / 2;
+            const halfWidth = imgW / 2;
             const deg = 360 / imgLen / 2
-            const r = halfW / (Math.tan(deg * Math.PI / 180)).toFixed(3) // 半径距离
-            return fixedR = r.toFixed(1)
+            return Math.round(halfWidth / (Math.tan(deg * Math.PI / 180))) - 2 // 半径距离
         }
         console.log("半径R为" + r + 'px')
 
         const arr = []
         const wrapper = document.getElementById('inner')
         for (var i = 1; i <= imgLen; i++) {
-            arr[i] = '<div class="piece piece-' + i + '"><img src="./images/p' + i + '.png"></div>'
+            // arri[i].style.background = 'url("./img/p' + (j + 1) + '.png") no-repeat';
+            arr[i] = '<div class="piece piece-' + i + '" style="background:url(./images/p' + i + '.png) no-repeat"></div>'
             //arr[i] = '<div class="piece piece-' + i + '">' + i + '</div>'
         }
         wrapper.innerHTML = arr.join('')
@@ -83,6 +93,7 @@
         // 画3D
         const doms = wrapper.querySelectorAll('.piece')
         for (var j = 0; j < doms.length; j++) {
+
         	doms[j].style.transform = "rotateY(" + 360/imgLen * j + "deg) translateZ(" + r +"px)"; // 
         }
 

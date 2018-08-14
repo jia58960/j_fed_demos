@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ES 5相关题型</title>
+</head>
+<body>
+	<h1>打开console控制台看效果</h1>
+	<div id="list">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</div>
+	<script>
+		// 1、点击上述li节点 获取其中的值。,变相考察闭包，突破思维定式
+	const list = document.getElementById('list')
+	const arr = list.getElementsByTagName('li')
+	for (var i = 0; i < arr.length; i ++) {
+		arr[i].addEventListener('click', function (e) {
+			console.log(this.innerHTML) // 突破思维定式
+		})
+	}
+		/*说明：思维定式解法：使用let替代var 或 让i有自己作用域的其它方案
+		突破思维定式解法：this.innerHTML*/
+
+		// 2、考察变量声明提升
+	+function(){
+		console.log(a)
+		a()
+		var a = function() {
+			console.log(1)
+		}
+
+		function a() {
+			console.log(2)
+		}
+		console.log(a)
+		a()
+		var c = d = a
+	}()
+	console.log(d)
+	console.log(c)
+
+		// 3、还是考察变量声明提升
+	function test() {
+		if (false) {
+			var a = 1
+		}
+	 console.log('inner: ' +  a)
+	}
+	test() 
+	alert(a)
+
+	// 4、考察with
+	(function(){
+		var a = b = 1
+	})()
+	console.log(a)
+	console.log(b)
+
+	// 5、考察with
+	var o = {a : 1}
+	var a = 10
+	var b = 20
+	var c = 40
+	function test() {
+		with(o) {
+			a = 2
+			var b = 3
+			c = 4
+		}
+	}
+	test()
+	console.log(o)
+	console.log('outer a:' + a)
+	console.log('outer b:' + b)
+	console.log('outer c:' + c)
+
+	// 6.1、考察this简单版
+	this.a = 20
+	var jia = {
+		a: 30,
+		init: function() {
+			console.log(this.a)
+		},
+		initArrow: () => {
+			console.log(this.a)
+		},
+		initFunc: function() {
+			function test() {
+				console.log(this.a)
+			}
+			test()
+		}
+	}
+	console.log(jia.init())
+	var s = jia.init
+	console.log(s())
+	console.log(jia.initArrow())
+	console.log(jia.initFunc())
+
+	// 6.2 考察this,并写出去掉注释之后的输出值
+	this.a = 20
+	var test = {
+		a: 40,
+		init: () => {
+			console.log(this.a)
+			function go() {
+				// this.a = 60
+				console.log(this.a)
+			}
+			go.prototype.a = 50
+			return go
+		}
+	}
+	var p = test.init()
+	p()
+	new(test.init())()
+
+	// 7、考察原型链
+	class test  {
+		constructor(args) {
+			
+		}
+		a(){
+			console.log(1)
+		}
+	}
+	test.prototype.a = function() {
+		console.log(2)
+	}
+	(new test).a()
+
+	// 8、考察传值问题
+	var o = {
+		k: 3
+	}
+	function test(o) { // o是一个局部变量，可以理解为o是一个栈内存，o，k指向同一块堆内存
+			o = {
+				v: 5
+			}
+	}
+	test(o)
+	console.log(o.v)
+
+	//问答题1： 请在下面写出javascript面向对象编程的混合式继承，并写出相应的ES 6版的继承。要求：汽车是父类，cruze是子类，父类有颜色，价格属性，有售卖的方法。cruze子类实现父类颜色是红色，价格是14W，售卖方法实现如下：将红色的cruze卖给了小王，价格是14W。
+
+	// 问答题2：请问点击<button id="test"></button>会有反应吗？为什么？能解决吗？
+	$('#test').click(function() {
+		console.log(1)
+	})
+	setTimeout(function() {
+		console.log(2)
+	}, 0)
+	while(true) {
+		console.log(3)
+	}
+
+	//问答题3： 请用一句话遍历变量a，var a = 'abc'(禁止使用for)
+	Array.prototype.slice.call(a)
+	[...a]
+	Array.from(a)
+
+ // 问答题4：请写出如下输出值，并解释为什么
+ var s = []
+ var arr = s
+ for (var i = 0; i < 3; i ++) {
+ 	var pusher = {
+ 		value: 'item' + i
+ 	}, tmp
+ 	if (i !== 2) {
+ 		tmp = []
+ 		pusher.children = tmp
+ 	}
+ 	arr.push(pusher)
+ 	arr = tmp
+ }
+ console.log(s[0])
+
+ // 问答题5：请描述你理解的函数式编程，并书写下面代码结果，如何将函数式编程运用到具体项目中呢？
+ var Container = function (x) {
+ 	this.__value = x
+ }
+ Container.of = x => new Container(x)
+ Container.prototype.map = function(f) {
+ 	return Container.of(f(this.__value))
+ }
+ Container.of(3).map(x => x + 1).map(x =>'Result is:' + x)
+	</script>
+</body>
+</html>
