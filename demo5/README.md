@@ -2,7 +2,7 @@
 
 ## 面试题
 
- + 见index.html
+ + 见[index.html](./index.html)
 
 ## 知识点整理
 
