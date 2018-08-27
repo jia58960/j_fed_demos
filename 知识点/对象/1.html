@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS对象知识点</title>
+</head>
+<body>
+	<ol>
+		<li>一切皆对象。Number、String、Boolean、Function、Array、Date、RegExp等既是构造函数也是对象。String、Number的文字类型在必要时引擎会自动转换为对象。比如'abc'.length，123.456.toLocaleString()等</li>
+		<li>对象的属性名只能为字符串。RegExp、Date只有对象形式。ES 6增加了可计算属性名</li>
+		<li>对象属性的value,writable,enumerable,configurable。 默认添加的属性除value外的另外三个配置项都是true。 Object.defineProperty(obj, "a", {..}) | Object.defineProperty(obj, "b", { get() {}, set() {} })</li>
+		<li>深复制:JSON.parse(JSON.stringify(...))和浅复制:Object.assign()。</li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ol>
+	<script>
+		
+		function Maybe(val) {
+			this.val = val
+		}
+		Maybe.of = x => new Maybe(x)
+		Maybe.prototype.map = function(f) {
+			return this.validateVal() ? Maybe.of(null) : Maybe.of(f(this.val))
+		}
+		Maybe.prototype.validateVal = function() {
+			return this.val === null || this.val === undefined
+		}
+		Maybe.of(2).map(function(x) { return x + 1})
+	</script>
+</body>
+</html>

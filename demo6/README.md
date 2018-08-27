@@ -110,9 +110,27 @@ fabilaqi2(5, 1)
 (3) fablaqi2(2, 3*4*5*1)
 (4) fablaqi2(1, 2*3*4*5*1)
 
-**函子**的概念：也是一种容器 包含了值和变形关系，比较特殊的是，它的变形关系可以依次作用于每一个值，将当前容器变形成另一个容器。
+**函子**的概念：也是一种范畴（容器），包含了值和变形关系，比较**特殊的是，它的变形关系可以依次作用于每一个值，将当前容器变形成另一个容器。**
 
-一般约定，**函子的标志就是容器具有map方法**。该方法将容器里面的每一个值，映射到另一个容器。
+一般约定，**函子的标志就是容器具有map方法**。该方法将容器里面的每一个值，映射到另一个容器。另外，函数式编程里面的运算，都是通过函子完成，即运算不直接针对值，而是针对这个值的容器----函子。因此，学习函数式编程，实际上就是学习函子的各种运算。
+
+函数式编程一般约定，函子有一个**of方法**，用来生成新的容器。
+
+一个Maybe函子的简单实现：
+```javascript
+function Maybe(val) {
+		this.val = val
+}	
+Maybe.of = x => new Maybe(x)
+Maybe.prototype.map = function(f) {
+	return this.validateVal() ? Maybe.of(null) : Maybe.of(f(this.val))
+}
+Maybe.prototype.validateVal = function() {
+	return this.val === null || this.val === undefined
+}
+Maybe.of(2).map(function(x) { return x + 1}) // Maybe {val: 3}
+Maybe.of(null).map(function(x) { return x + 1}) // Maybe {val: null}
+```
 
 ## underscore.js源码解析
 ### 敬请期待
