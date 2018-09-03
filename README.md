@@ -13,6 +13,7 @@
 - [x] demo4：理解CSS3贝塞尔曲线(cubic-bezier)
 - [x] demo5：ES 5核心知识点整理及相关面试题
 - [ ] demo6：函数式编程（整理中...）
+- [x] demo7：ES6 + System.js + jQuery实现点赞功能
 
 ## 发现问题？
 发邮件(547221469@qq.com)给我或直接提issue
